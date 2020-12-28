@@ -2,10 +2,10 @@ import React, { useState, useEffect, Fragment, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Form, Col, Button } from "react-bootstrap";
 
-const StudentForm = (props) => {
+const StaffForm = (props) => {
   const dispatch = useDispatch();
   const [validated, setValidated] = useState(false);
-  const [student, setStudent] = useState({});
+  const [staff, setStaff] = useState({});
 
   const ref = useRef(null);
   const handleSubmit = (event) => {
@@ -16,7 +16,7 @@ const StudentForm = (props) => {
     } else {
       setValidated(true);
       event.preventDefault();
-      // dispatch(addClient(student));
+      // dispatch(addClient(staff));
       props.show(false);
       form.reset();
     }
@@ -27,7 +27,7 @@ const StudentForm = (props) => {
         <div className="card shadow mb-4">
           <div className="card-header py-3">
             <h6 className="m-0 font-weight-bold text-green">
-              Ajouter Etudiant
+              Ajouter un membre
             </h6>
           </div>
           <Form
@@ -47,7 +47,7 @@ const StudentForm = (props) => {
                   id="validationNom"
                   name="lastName"
                   onBlur={(e) =>
-                    setStudent({ ...student, [e.target.name]: e.target.value })
+                    setStaff({ ...staff, [e.target.name]: e.target.value })
                   }
                 />
               </Form.Group>
@@ -60,7 +60,7 @@ const StudentForm = (props) => {
                   id="validationPrenom"
                   name="firstName"
                   onBlur={(e) =>
-                    setStudent({ ...student, [e.target.name]: e.target.value })
+                    setStaff({ ...staff, [e.target.name]: e.target.value })
                   }
                 />
               </Form.Group>
@@ -76,7 +76,7 @@ const StudentForm = (props) => {
                   name="cin"
                   id="validationCIN"
                   onBlur={(e) =>
-                    setStudent({ ...student, [e.target.name]: e.target.value })
+                    setStaff({ ...staff, [e.target.name]: e.target.value })
                   }
                 />
               </Form.Group>
@@ -89,11 +89,26 @@ const StudentForm = (props) => {
                   name="birthdate"
                   id="validationDN"
                   onBlur={(e) =>
-                    setStudent({ ...student, [e.target.name]: e.target.value })
+                    setStaff({ ...staff, [e.target.name]: e.target.value })
                   }
                 />
               </Form.Group>
             </Form.Row>
+
+            <Form.Row>
+              <Form.Group as={Col}>
+                <Form.Label>Role</Form.Label>
+                <Form.Control
+                  type="text"
+                  className="form-control"
+                  id="validationRole"
+                  onBlur={(e) =>
+                    setStaff({ ...staff, [e.target.name]: e.target.value })
+                  }
+                />
+              </Form.Group>
+            </Form.Row>
+
             <Form.Row>
               <Form.Group as={Col}>
                 <Form.Label>E-mail</Form.Label>
@@ -103,7 +118,7 @@ const StudentForm = (props) => {
                   id="validationEMail"
                   name="email"
                   onBlur={(e) =>
-                    setStudent({ ...student, [e.target.name]: e.target.value })
+                    setStaff({ ...staff, [e.target.name]: e.target.value })
                   }
                   placeholder="Email"
                 />
@@ -121,39 +136,12 @@ const StudentForm = (props) => {
                   placeholder="Téléphone"
                   name="phone"
                   onBlur={(e) =>
-                    setStudent({ ...student, [e.target.name]: e.target.value })
-                  }
-                />
-              </Form.Group>
-            </Form.Row>
-            <hr />
-
-            <Form.Row>
-              <Form.Group as={Col}>
-                <Form.Label>Spécialité</Form.Label>
-                <Form.Control
-                  type="text"
-                  className="form-control"
-                  id="validationMAjor"
-                  onBlur={(e) =>
-                    setStudent({ ...student, [e.target.name]: e.target.value })
-                  }
-                />
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Filière</Form.Label>
-                <Form.Control
-                  type="text"
-                  className="form-control"
-                  id="validationGrade"
-                  onBlur={(e) =>
-                    setStudent({ ...student, [e.target.name]: e.target.value })
+                    setStaff({ ...staff, [e.target.name]: e.target.value })
                   }
                 />
               </Form.Group>
             </Form.Row>
 
-            <hr />
             <Form.Row style={{ marginTop: "40px", marginLeft: "auto" }}>
               <Button
                 className="btn btn-dark margin-auto"
@@ -175,4 +163,4 @@ const StudentForm = (props) => {
   );
 };
 
-export default StudentForm;
+export default StaffForm;

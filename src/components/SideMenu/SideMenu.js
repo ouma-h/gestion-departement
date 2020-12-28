@@ -2,8 +2,8 @@ import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { AiFillDashboard } from "react-icons/ai";
-import { GoPackage } from "react-icons/go";
-import { FaWarehouse, FaTruck } from "react-icons/fa";
+import { GiTeacher } from "react-icons/gi";
+import { MdSchool } from "react-icons/md";
 const SideMenu = () => {
   let [leftMenuVisibility, setLeftMenuVisibility] = useState(false);
 
@@ -54,21 +54,21 @@ const SideMenu = () => {
         <div className="sidebar-heading">Gestion</div>
 
         <li className="nav-item">
-          <Link className="nav-link" to={`/clients`}>
+          <Link className="nav-link" to={`/administration`}>
             <BsFillPeopleFill size="1.4rem" />
-            <span>Cadre Administratif</span>
+            <span> Cadre Administratif</span>
           </Link>
         </li>
 
         <li className="nav-item">
-          <Link className="nav-link" to={`/produits`}>
-            <FaWarehouse size="1.4rem" /> <span>Enseignants</span>
+          <Link className="nav-link" to={`/enseignants`}>
+            <GiTeacher size="1.4rem" /> <span> Enseignants</span>
           </Link>
         </li>
 
         <li className="nav-item">
-          <Link className="nav-link" to={`/commandes`}>
-            <GoPackage size="1.4rem" /> <span>Etudiants</span>
+          <Link className="nav-link" to={`/etudiants`}>
+            <MdSchool size="1.4rem" /> <span> Etudiants</span>
           </Link>
         </li>
 
