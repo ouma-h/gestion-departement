@@ -43,7 +43,7 @@ function studentsReducer(state = initialStates, action) {
     case DELETE_STUDENT: {
       return {
         ...state,
-        students: state.students.filter((pr) => pr.id !== action.id),
+        students: state.students.filter((pr) => pr.cin !== action.cin),
       };
     }
     default:

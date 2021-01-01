@@ -11,7 +11,8 @@ const initialStates = {
   isLoaded: false,
 };
 
-function orderReducer(state = initialStates, action) {
+function staffReducer(state = initialStates, action) {
+  console.log(action);
   switch (action.type) {
     case ADD_STAFF: {
       return {
@@ -51,4 +52,4 @@ function orderReducer(state = initialStates, action) {
   }
 }
 
-export default orderReducer;
+export default staffReducer;

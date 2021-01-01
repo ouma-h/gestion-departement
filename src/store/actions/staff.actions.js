@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import axios from "axios";
-import { BASE_URL_STAFF, SUCCESS } from "../store";
+import { BASE_URL_STAFF, SUCCESS } from "../constants";
 export const ADD_STAFF = "ADD_STAFF";
 export const GET_STAFF = "GET_STAFF";
 export const GET_STAFF_FETCH = "GET_STAFF_FETCH";

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { BASE_URL_PROFESSORS, SUCCESS } from "../store";
+import { BASE_URL_PROFESSORS, SUCCESS } from "../constants";
 export const GET_PROFESSORS = "GET_PROFESSORS";
 export const GET_PROFESSORS_FETCH = "GET_PROFESSORS_FETCH";
 export const ADD_PROFESSOR = "ADD_PROFESSOR";

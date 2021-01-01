@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import axios from "axios";
-import { BASE_URL_STUDENTS, SUCCESS } from "../store";
+import { BASE_URL_STUDENTS, SUCCESS } from "../constants";
 export const ADD_STUDENT = "ADD_STUDENT";
 export const GET_STUDENT = "GET_STUDENT";
 export const GET_STUDENT_FETCH = "GET_STUDENT_FETCH";
@@ -18,8 +18,10 @@ export const addStudent = (student) => (dispatch) => {
   axios
     .post(BASE_URL_STUDENTS, body, config)
     .then((res) => {
+      console.log(res);
       dispatch({
         type: ADD_STUDENT,
+        payload: res.data,
       });
       toast.success(SUCCESS);
     })
@@ -35,9 +37,10 @@ export const getStudents = () => (dispatch) => {
   axios
     .get(BASE_URL_STUDENTS)
     .then((res) => {
+      console.log(res);
       dispatch({
         type: GET_STUDENT,
-        payload: res.data,
+        payload: res.data._embedded.students,
       });
     })
 
@@ -46,16 +49,13 @@ export const getStudents = () => (dispatch) => {
     });
 };
 
-export const editStudent = (id, dataField, value) => (dispatch) => {
-  let vcommande = {};
-  vcommande[dataField] = value;
-  const body = JSON.stringify({ commande: vcommande });
+export const editStudent = (student, id) => (dispatch) => {
+  const body = JSON.stringify(student);
   axios
     .put(BASE_URL_STUDENTS + `/${id}`, body, config)
     .then((res) => {
       dispatch({
         type: EDIT_STUDENT,
-        payload: res.data,
       });
       toast.success(SUCCESS);
     })
@@ -64,13 +64,13 @@ export const editStudent = (id, dataField, value) => (dispatch) => {
     });
 };
 
-export const deleteStudent = (id) => (dispatch) => {
+export const deleteStudent = (cin, id) => (dispatch) => {
   axios
     .delete(BASE_URL_STUDENTS + `/${id}`)
     .then((res) => {
       dispatch({
         type: DELETE_STUDENT,
-        id: id,
+        cin: cin,
       });
       toast.success(SUCCESS);
     })

@@ -6,53 +6,67 @@ import cellEditFactory from "react-bootstrap-table2-editor";
 import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 
 import ReactLoading from "../SharedComponents/ReactLoading";
-
+import StudentDetails from "./StudentDetails";
 import ActionConfirmModal from "../SharedComponents/ActionConfirmModal";
 
-import { BsTrashFill } from "react-icons/bs";
-import { GoPackage } from "react-icons/go";
+import { FiTrash2, FiEye } from "react-icons/fi";
+
+import {
+  deleteStudent,
+  editStudent,
+  getStudents,
+} from "../../store/actions/students.actions";
 
 const StudentList = (props) => {
   const dispatch = useDispatch();
 
+  //Edit Student
+  const [student, setStudent] = useState(0);
+
+  //confirm Modal
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [clientId, setClientId] = useState(0);
-
-  const ref = useRef(null);
-
-  //   useEffect(() => {
-  //     dispatch(getClients());
-  //   }, []);
-
   const handleClose = () => setShowDeleteModal(false);
   const handleShow = () => setShowDeleteModal(true);
 
+  //delete student
   const handleDelete = () => {
-    //dispatch(deleteClient(clientId));
+    dispatch(
+      deleteStudent(
+        student.cin,
+        student._links.self.href.charAt(student._links.self.href.length - 1)
+      )
+    );
     handleClose();
   };
 
-  const handleClick = () => {
-    ref.current.showClientOrders();
-  };
+  //Student Details
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const handleDetailsClose = () => setShowDetailsModal(false);
+  const handleDetailsShow = () => setShowDetailsModal(true);
 
-  const data = [];
+  //Students list and table management
+  const students = useSelector((state) => state.students.students);
+  const isLoaded = useSelector((state) => state.students.isLoaded);
+  useEffect(() => {
+    dispatch(getStudents());
+  }, []);
+
   const actions = (cell, row, rowIndex, formatExtraData) => {
     return (
-      <div className="table-actions">
-        <GoPackage
+      <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+        <FiEye
           size="25px"
-          color="#FFD700"
+          color="green"
           onClick={() => {
-            setClientId(row.id);
-            handleClick();
+            setStudent(row);
+            handleDetailsShow();
           }}
-        />{" "}
-        <BsTrashFill
-          size="1.3rem"
+        />
+        <FiTrash2
+          size="25px"
           color="red"
           onClick={() => {
-            setClientId(row.id);
+            setStudent(row);
             handleShow();
           }}
         />
@@ -69,31 +83,25 @@ const StudentList = (props) => {
 
   const columns = [
     {
-      dataField: "id",
-      text: "N°",
-      sort: true,
-    },
-    {
-      dataField: "nom",
-      text: "Nom et Prénom",
-      sort: true,
-      filter: textFilter(),
-    },
-    {
-      dataField: "raison_sociale",
+      dataField: "cin",
       text: "CIN",
+      sort: true,
+    },
+    {
+      dataField: "name",
+      text: "Nom et Prénom",
       sort: true,
       filter: textFilter(),
     },
 
     {
-      dataField: "matricule_fiscal",
-      text: "Filière",
+      dataField: "grade",
+      text: "Niveau",
       sort: true,
       filter: textFilter(),
     },
     {
-      dataField: "addresse",
+      dataField: "major",
       text: "Spécialité",
       sort: true,
       filter: textFilter(),
@@ -106,7 +114,7 @@ const StudentList = (props) => {
       filter: textFilter(),
     },
     {
-      dataField: "telephone",
+      dataField: "phone",
       text: "Tél.",
       filter: textFilter(),
     },
@@ -120,17 +128,23 @@ const StudentList = (props) => {
   const cellEdit = cellEditFactory({
     mode: "dbclick",
     afterSaveCell: (oldValue, newValue, row, column) => {
-      //dispatch(editClient(row.id, column.dataField, newValue));
+      row[column.dataField] = newValue;
+      dispatch(
+        editStudent(
+          row,
+          row._links.self.href.charAt(row._links.self.href.length - 1)
+        )
+      );
     },
   });
   return (
     <>
-      {true ? (
+      {isLoaded ? (
         <div className="table-responsive portlet">
           <BootstrapTable
             bootstrap4
             keyField="id"
-            data={data}
+            data={students}
             columns={columns}
             cellEdit={cellEdit}
             filter={filterFactory()}
@@ -146,6 +160,13 @@ const StudentList = (props) => {
               show={showDeleteModal}
               handleClose={handleClose}
               action={handleDelete}
+            />
+          ) : null}
+          {showDetailsModal ? (
+            <StudentDetails
+              show={showDetailsModal}
+              handleClose={handleDetailsClose}
+              student={student}
             />
           ) : null}
         </div>

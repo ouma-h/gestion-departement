@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Form, Col, Button } from "react-bootstrap";
+import { addStudent } from "../../store/actions/students.actions";
 
 const StudentForm = (props) => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const StudentForm = (props) => {
     } else {
       setValidated(true);
       event.preventDefault();
-      // dispatch(addClient(student));
+      dispatch(addStudent(student));
       props.show(false);
       form.reset();
     }
@@ -34,31 +35,17 @@ const StudentForm = (props) => {
             ref={ref}
             style={{ padding: "15px" }}
             validated={validated}
-            noValidate
             onSubmit={handleSubmit}
           >
             <Form.Row>
               <Form.Group as={Col}>
-                <Form.Label>Nom</Form.Label>
+                <Form.Label>Nom et Prénom</Form.Label>
                 <Form.Control
                   required
                   type="text"
                   className="form-control "
                   id="validationNom"
-                  name="lastName"
-                  onBlur={(e) =>
-                    setStudent({ ...student, [e.target.name]: e.target.value })
-                  }
-                />
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Prénom</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  className="form-control "
-                  id="validationPrenom"
-                  name="firstName"
+                  name="name"
                   onBlur={(e) =>
                     setStudent({ ...student, [e.target.name]: e.target.value })
                   }
@@ -71,6 +58,7 @@ const StudentForm = (props) => {
                 <Form.Label>CIN</Form.Label>
                 <Form.Control
                   required
+                  maxLength="8"
                   type="text"
                   className="form-control "
                   name="cin"
@@ -130,22 +118,34 @@ const StudentForm = (props) => {
 
             <Form.Row>
               <Form.Group as={Col}>
+                <Form.Label>Filière</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="grade"
+                  custom
+                  onChange={(e) =>
+                    setStudent({ ...student, [e.target.name]: e.target.value })
+                  }
+                >
+                  <option>choisir...</option>
+                  <option>LFI1</option>
+                  <option>LFI2</option>
+                  <option>LFI3</option>
+                  <option>IF3</option>
+                  <option>IF4</option>
+                  <option>IF5</option>
+                  <option>M1</option>
+                  <option>M2</option>
+                  <option>PhD</option>
+                </Form.Control>
+              </Form.Group>
+              <Form.Group as={Col}>
                 <Form.Label>Spécialité</Form.Label>
                 <Form.Control
                   type="text"
                   className="form-control"
                   id="validationMAjor"
-                  onBlur={(e) =>
-                    setStudent({ ...student, [e.target.name]: e.target.value })
-                  }
-                />
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Filière</Form.Label>
-                <Form.Control
-                  type="text"
-                  className="form-control"
-                  id="validationGrade"
+                  name="major"
                   onBlur={(e) =>
                     setStudent({ ...student, [e.target.name]: e.target.value })
                   }

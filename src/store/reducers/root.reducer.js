@@ -4,8 +4,8 @@ import studentsReducer from "./students.reducer";
 import professorsReducer from "./professors.reducer";
 
 const rootReducers = combineReducers({
-  professors: professorsReducer,
   students: studentsReducer,
+  professors: professorsReducer,
   staff: staffReducer,
 });
 
