@@ -144,7 +144,7 @@ const StaffList = (props) => {
         <div className="table-responsive portlet">
           <BootstrapTable
             bootstrap4
-            keyField="id"
+            keyField="cin"
             data={staffData}
             columns={columns}
             cellEdit={cellEdit}

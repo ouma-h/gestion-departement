@@ -143,7 +143,7 @@ const StudentList = (props) => {
         <div className="table-responsive portlet">
           <BootstrapTable
             bootstrap4
-            keyField="id"
+            keyField="cin"
             data={students}
             columns={columns}
             cellEdit={cellEdit}
