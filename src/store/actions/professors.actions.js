@@ -18,7 +18,7 @@ export const getProfessors = () => (dispatch, getState) => {
       console.log(res.data);
       dispatch({
         type: GET_PROFESSORS,
-        payload: res.data.products,
+        payload: res.data._embedded.enseignants,
       });
     })
     .catch((error) => {

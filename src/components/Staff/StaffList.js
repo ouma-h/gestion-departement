@@ -9,50 +9,65 @@ import ReactLoading from "../SharedComponents/ReactLoading";
 
 import ActionConfirmModal from "../SharedComponents/ActionConfirmModal";
 
-import { BsTrashFill } from "react-icons/bs";
-import { GoPackage } from "react-icons/go";
+import { FiTrash2, FiEye } from "react-icons/fi";
+import {
+  getStaff,
+  deleteStaff,
+  editStaff,
+} from "../../store/actions/staff.actions";
+import PersonDetails from "../SharedComponents/PersonDetails";
 
 const StaffList = (props) => {
   const dispatch = useDispatch();
 
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [clientId, setClientId] = useState(0);
+  //staff object to pass to PersonDetails
+  const [staff, setStaff] = useState(0);
 
   const ref = useRef(null);
+  //Staff Details
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const handleDetailsClose = () => setShowDetailsModal(false);
+  const handleDetailsShow = () => setShowDetailsModal(true);
 
-  //   useEffect(() => {
-  //     dispatch(getClients());
-  //   }, []);
-
+  //confirm Modal
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const handleClose = () => setShowDeleteModal(false);
   const handleShow = () => setShowDeleteModal(true);
 
+  //delete staff
   const handleDelete = () => {
-    //dispatch(deleteClient(clientId));
+    dispatch(
+      deleteStaff(
+        staff.cin,
+        staff._links.self.href.charAt(staff._links.self.href.length - 1)
+      )
+    );
     handleClose();
   };
 
-  const handleClick = () => {
-    ref.current.showClientOrders();
-  };
+  //Students list and table management
+  const staffData = useSelector((state) => state.staff.staff);
+  const isLoaded = useSelector((state) => state.staff.isLoaded);
+  useEffect(() => {
+    dispatch(getStaff());
+  }, []);
 
-  const data = [];
   const actions = (cell, row, rowIndex, formatExtraData) => {
     return (
-      <div className="table-actions">
-        <GoPackage
+      <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+        <FiEye
           size="25px"
-          color="#FFD700"
+          color="green"
           onClick={() => {
-            setClientId(row.id);
-            handleClick();
+            setStaff(row);
+            handleDetailsShow();
           }}
-        />{" "}
-        <BsTrashFill
-          size="1.3rem"
+        />
+        <FiTrash2
+          size="25px"
           color="red"
           onClick={() => {
-            setClientId(row.id);
+            setStaff(row);
             handleShow();
           }}
         />
@@ -69,26 +84,27 @@ const StaffList = (props) => {
 
   const columns = [
     {
-      dataField: "id",
-      text: "N°",
-      sort: true,
-    },
-    {
-      dataField: "nom",
-      text: "Nom et Prénom",
-      sort: true,
-      filter: textFilter(),
-    },
-    {
-      dataField: "raison_sociale",
+      dataField: "cin",
       text: "CIN",
+      sort: true,
+    },
+    {
+      dataField: "name",
+      text: "Nom et Prénom",
       sort: true,
       filter: textFilter(),
     },
 
     {
-      dataField: "matricule_fiscal",
+      dataField: "role",
       text: "Rôle",
+      sort: true,
+      filter: textFilter(),
+    },
+
+    {
+      dataField: "birthdate",
+      text: "D. Naissance",
       sort: true,
       filter: textFilter(),
     },
@@ -100,7 +116,7 @@ const StaffList = (props) => {
       filter: textFilter(),
     },
     {
-      dataField: "telephone",
+      dataField: "phone",
       text: "Tél.",
       filter: textFilter(),
     },
@@ -110,21 +126,26 @@ const StaffList = (props) => {
       formatter: actions,
     },
   ];
-
   const cellEdit = cellEditFactory({
     mode: "dbclick",
     afterSaveCell: (oldValue, newValue, row, column) => {
-      //dispatch(editClient(row.id, column.dataField, newValue));
+      row[column.dataField] = newValue;
+      dispatch(
+        editStaff(
+          row,
+          row._links.self.href.charAt(row._links.self.href.length - 1)
+        )
+      );
     },
   });
   return (
     <>
-      {true ? (
+      {isLoaded ? (
         <div className="table-responsive portlet">
           <BootstrapTable
             bootstrap4
             keyField="id"
-            data={data}
+            data={staffData}
             columns={columns}
             cellEdit={cellEdit}
             filter={filterFactory()}
@@ -140,6 +161,14 @@ const StaffList = (props) => {
               show={showDeleteModal}
               handleClose={handleClose}
               action={handleDelete}
+            />
+          ) : null}
+          {showDetailsModal ? (
+            <PersonDetails
+              show={showDetailsModal}
+              handleClose={handleDetailsClose}
+              object={staff}
+              flag="STAFF"
             />
           ) : null}
         </div>

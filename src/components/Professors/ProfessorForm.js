@@ -31,7 +31,6 @@ const ProfessorForm = (props) => {
           <Form
             style={{ padding: "15px" }}
             validated={validated}
-            noValidate
             onSubmit={addClientItem}
           >
             <Form.Row>
@@ -42,22 +41,12 @@ const ProfessorForm = (props) => {
                   type="text"
                   className="form-control "
                   id="validationCustom01"
-                  name="lastName"
+                  name="name"
                   onBlur={(e) =>
-                    setProfessor({ ...professor, [e.target.name]: e.target.value })
-                  }
-                />
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Prénom</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  className="form-control "
-                  id="validationCustom01"
-                  name="firstName"
-                  onBlur={(e) =>
-                    setProfessor({ ...professor, [e.target.name]: e.target.value })
+                    setProfessor({
+                      ...professor,
+                      [e.target.name]: e.target.value,
+                    })
                   }
                 />
               </Form.Group>
@@ -73,7 +62,10 @@ const ProfessorForm = (props) => {
                   name="cin"
                   id="validationCustom01"
                   onBlur={(e) =>
-                    setProfessor({ ...professor, [e.target.name]: e.target.value })
+                    setProfessor({
+                      ...professor,
+                      [e.target.name]: e.target.value,
+                    })
                   }
                 />
               </Form.Group>
@@ -86,7 +78,10 @@ const ProfessorForm = (props) => {
                   name="birthdate"
                   id="validationCustom01"
                   onBlur={(e) =>
-                    setProfessor({ ...professor, [e.target.name]: e.target.value })
+                    setProfessor({
+                      ...professor,
+                      [e.target.name]: e.target.value,
+                    })
                   }
                 />
               </Form.Group>
@@ -102,7 +97,10 @@ const ProfessorForm = (props) => {
                   placeholder="Téléphone"
                   name="grade"
                   onBlur={(e) =>
-                    setProfessor({ ...professor, [e.target.name]: e.target.value })
+                    setProfessor({
+                      ...professor,
+                      [e.target.name]: e.target.value,
+                    })
                   }
                 />
               </Form.Group>
@@ -115,7 +113,10 @@ const ProfessorForm = (props) => {
                   name="date_emb"
                   id="validationCustom01"
                   onBlur={(e) =>
-                    setProfessor({ ...professor, [e.target.name]: e.target.value })
+                    setProfessor({
+                      ...professor,
+                      [e.target.name]: e.target.value,
+                    })
                   }
                 />
               </Form.Group>
@@ -129,7 +130,10 @@ const ProfessorForm = (props) => {
                   className="form-control"
                   name="email"
                   onBlur={(e) =>
-                    setProfessor({ ...professor, [e.target.name]: e.target.value })
+                    setProfessor({
+                      ...professor,
+                      [e.target.name]: e.target.value,
+                    })
                   }
                   placeholder="Email"
                 />
@@ -146,7 +150,10 @@ const ProfessorForm = (props) => {
                   placeholder="Téléphone"
                   name="phone"
                   onBlur={(e) =>
-                    setProfessor({ ...professor, [e.target.name]: e.target.value })
+                    setProfessor({
+                      ...professor,
+                      [e.target.name]: e.target.value,
+                    })
                   }
                 />
               </Form.Group>

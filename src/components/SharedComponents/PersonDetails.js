@@ -6,7 +6,7 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { FiCalendar, FiMail, FiPhone, FiCreditCard } from "react-icons/fi";
 import ReactLoading from "../SharedComponents/ReactLoading";
 const color = "#b3243c";
-const StudentDetails = ({ show, handleClose, student }) => {
+const PersonDetails = ({ show, handleClose, object, flag }) => {
   return (
     <>
       <Modal
@@ -15,52 +15,63 @@ const StudentDetails = ({ show, handleClose, student }) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <ModalHeader toggle={handleClose}>Détails Etudiant</ModalHeader>
+        <ModalHeader toggle={handleClose}>
+          Détails{" "}
+          {flag === "STAFF"
+            ? "membre admin"
+            : flag === "STUDENT"
+            ? "Etudiant"
+            : "Enseignant"}
+        </ModalHeader>
         <ModalBody>
           <div className="card-body">
             <div className="row no-gutters align-items-center">
               <div className="col mr-2">
                 <div className="h5 mb-0 font-weight-bold text-gray-800">
-                  {student.name}
+                  {object.name}
                 </div>
 
                 <div
                   style={{ marginTop: "8px" }}
                   className="h5 mb-0 font-weight-bold text-gray-600"
                 >
-                  {student.grade} {student.major}
+                  {flag === "STAFF"
+                    ? object.role
+                    : flag === "STUDENT"
+                    ? object.grade + " " + object.major
+                    : object.specialty}
                 </div>
                 <br />
                 <hr />
                 <br />
                 <div>
-                  {student.cin ? (
+                  {object.cin ? (
                     <div>
-                      <FiCreditCard color={color} /> {student.cin}
+                      <FiCreditCard color={color} /> {object.cin}
                     </div>
                   ) : null}{" "}
                 </div>
                 <div>
-                  {student.birthdate ? (
+                  {object.birthdate ? (
                     <div>
-                      <FiCalendar color={color} /> {student.birthdate}
+                      <FiCalendar color={color} /> {object.birthdate}
                     </div>
                   ) : null}{" "}
                 </div>
 
                 <div>
-                  {student.email ? (
+                  {object.email ? (
                     <div>
-                      <FiMail color={color} /> {student.email}
+                      <FiMail color={color} /> {object.email}
                     </div>
                   ) : null}
                 </div>
 
                 <div>
-                  {student.phone ? (
+                  {object.phone ? (
                     <div>
                       {" "}
-                      <FiPhone color={color} /> {student.phone}
+                      <FiPhone color={color} /> {object.phone}
                     </div>
                   ) : null}
                 </div>
@@ -86,4 +97,4 @@ const StudentDetails = ({ show, handleClose, student }) => {
     </>
   );
 };
-export default StudentDetails;
+export default PersonDetails;

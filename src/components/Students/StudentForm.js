@@ -59,6 +59,7 @@ const StudentForm = (props) => {
                 <Form.Control
                   required
                   maxLength="8"
+                  pattern="[0-9]{8}"
                   type="text"
                   className="form-control "
                   name="cin"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Form, Col, Button } from "react-bootstrap";
+import { addStaff } from "../../store/actions/staff.actions";
 
 const StaffForm = (props) => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const StaffForm = (props) => {
     } else {
       setValidated(true);
       event.preventDefault();
-      // dispatch(addClient(staff));
+      dispatch(addStaff(staff));
       props.show(false);
       form.reset();
     }
@@ -34,31 +35,17 @@ const StaffForm = (props) => {
             ref={ref}
             style={{ padding: "15px" }}
             validated={validated}
-            noValidate
             onSubmit={handleSubmit}
           >
             <Form.Row>
               <Form.Group as={Col}>
-                <Form.Label>Nom</Form.Label>
+                <Form.Label>Nom et Prénom</Form.Label>
                 <Form.Control
                   required
                   type="text"
                   className="form-control "
                   id="validationNom"
-                  name="lastName"
-                  onBlur={(e) =>
-                    setStaff({ ...staff, [e.target.name]: e.target.value })
-                  }
-                />
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Label>Prénom</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  className="form-control "
-                  id="validationPrenom"
-                  name="firstName"
+                  name="name"
                   onBlur={(e) =>
                     setStaff({ ...staff, [e.target.name]: e.target.value })
                   }
@@ -71,6 +58,8 @@ const StaffForm = (props) => {
                 <Form.Label>CIN</Form.Label>
                 <Form.Control
                   required
+                  maxLength="8"
+                  pattern="[0-9]{8}"
                   type="text"
                   className="form-control "
                   name="cin"
@@ -83,7 +72,6 @@ const StaffForm = (props) => {
               <Form.Group as={Col}>
                 <Form.Label>Date de naissance</Form.Label>
                 <Form.Control
-                  required
                   type="date"
                   className="form-control "
                   name="birthdate"
@@ -99,6 +87,7 @@ const StaffForm = (props) => {
               <Form.Group as={Col}>
                 <Form.Label>Role</Form.Label>
                 <Form.Control
+                  required
                   type="text"
                   className="form-control"
                   id="validationRole"

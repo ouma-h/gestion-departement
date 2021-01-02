@@ -12,7 +12,6 @@ const initialStates = {
 };
 
 function staffReducer(state = initialStates, action) {
-  console.log(action);
   switch (action.type) {
     case ADD_STAFF: {
       return {
@@ -44,7 +43,7 @@ function staffReducer(state = initialStates, action) {
     case DELETE_STAFF: {
       return {
         ...state,
-        staff: state.staff.filter((pr) => pr.id !== action.id),
+        staff: state.staff.filter((pr) => pr.cin !== action.cin),
       };
     }
     default:

@@ -6,7 +6,6 @@ import cellEditFactory from "react-bootstrap-table2-editor";
 import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 
 import ReactLoading from "../SharedComponents/ReactLoading";
-import StudentDetails from "./StudentDetails";
 import ActionConfirmModal from "../SharedComponents/ActionConfirmModal";
 
 import { FiTrash2, FiEye } from "react-icons/fi";
@@ -16,11 +15,12 @@ import {
   editStudent,
   getStudents,
 } from "../../store/actions/students.actions";
+import PersonDetails from "../SharedComponents/PersonDetails";
 
 const StudentList = (props) => {
   const dispatch = useDispatch();
 
-  //Edit Student
+  //Student object to pass to PersonDetails
   const [student, setStudent] = useState(0);
 
   //confirm Modal
@@ -163,10 +163,11 @@ const StudentList = (props) => {
             />
           ) : null}
           {showDetailsModal ? (
-            <StudentDetails
+            <PersonDetails
               show={showDetailsModal}
               handleClose={handleDetailsClose}
-              student={student}
+              object={student}
+              flag="STUDENT"
             />
           ) : null}
         </div>

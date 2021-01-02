@@ -22,7 +22,7 @@ const Staff = () => {
               style={{ display: "flex", justifyContent: "space-between" }}
             >
               <h6 className="m-0 font-weight-bold text-green">
-                Membre du cadre administratif
+                Membres du cadre administratif
               </h6>
               <div className="header-buttons">
                 <BsFillPlusSquareFill

@@ -16,14 +16,16 @@ export const addStaff = (staff) => (dispatch) => {
   const body = JSON.stringify(staff);
 
   axios
-    .post(BASE_URL_STAFF, body, config)
+    .post(BASE_URL_STAFF + "/staffs", body, config)
     .then((res) => {
       dispatch({
         type: ADD_STAFF,
+        payload: res.data,
       });
       toast.success(SUCCESS);
     })
     .catch((err) => {
+      console.log(err);
       toast.error("Erreur lors de l'ajout d'un membre. Réessayer");
     });
 };
@@ -33,11 +35,11 @@ export const getStaff = () => (dispatch) => {
     type: GET_STAFF_FETCH,
   });
   axios
-    .get(BASE_URL_STAFF)
+    .get(BASE_URL_STAFF + "/staffs")
     .then((res) => {
       dispatch({
         type: GET_STAFF,
-        payload: res.data,
+        payload: res.data._embedded.staffs,
       });
     })
 
@@ -46,16 +48,13 @@ export const getStaff = () => (dispatch) => {
     });
 };
 
-export const editStaff = (id, dataField, value) => (dispatch) => {
-  let vcommande = {};
-  vcommande[dataField] = value;
-  const body = JSON.stringify({ commande: vcommande });
+export const editStaff = (staff, id) => (dispatch) => {
+  const body = JSON.stringify(staff);
   axios
-    .put(BASE_URL_STAFF + `/${id}`, body, config)
+    .put(BASE_URL_STAFF + `/staffs/${id}`, body, config)
     .then((res) => {
       dispatch({
         type: EDIT_STAFF,
-        payload: res.data,
       });
       toast.success(SUCCESS);
     })
@@ -64,13 +63,13 @@ export const editStaff = (id, dataField, value) => (dispatch) => {
     });
 };
 
-export const deleteStaff = (id) => (dispatch) => {
+export const deleteStaff = (cin, id) => (dispatch) => {
   axios
-    .delete(BASE_URL_STAFF + `/${id}`)
+    .delete(BASE_URL_STAFF + `/staffs/${id}`)
     .then((res) => {
       dispatch({
         type: DELETE_STAFF,
-        id: id,
+        cin: cin,
       });
       toast.success(SUCCESS);
     })

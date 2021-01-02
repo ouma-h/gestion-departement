@@ -16,9 +16,8 @@ export const addStudent = (student) => (dispatch) => {
   const body = JSON.stringify(student);
 
   axios
-    .post(BASE_URL_STUDENTS, body, config)
+    .post(BASE_URL_STUDENTS + "/students", body, config)
     .then((res) => {
-      console.log(res);
       dispatch({
         type: ADD_STUDENT,
         payload: res.data,
@@ -35,7 +34,7 @@ export const getStudents = () => (dispatch) => {
     type: GET_STUDENT_FETCH,
   });
   axios
-    .get(BASE_URL_STUDENTS)
+    .get(BASE_URL_STUDENTS + "/students")
     .then((res) => {
       console.log(res);
       dispatch({
@@ -52,7 +51,7 @@ export const getStudents = () => (dispatch) => {
 export const editStudent = (student, id) => (dispatch) => {
   const body = JSON.stringify(student);
   axios
-    .put(BASE_URL_STUDENTS + `/${id}`, body, config)
+    .put(BASE_URL_STUDENTS + `/students/${id}`, body, config)
     .then((res) => {
       dispatch({
         type: EDIT_STUDENT,
@@ -66,7 +65,7 @@ export const editStudent = (student, id) => (dispatch) => {
 
 export const deleteStudent = (cin, id) => (dispatch) => {
   axios
-    .delete(BASE_URL_STUDENTS + `/${id}`)
+    .delete(BASE_URL_STUDENTS + `/students/${id}`)
     .then((res) => {
       dispatch({
         type: DELETE_STUDENT,
